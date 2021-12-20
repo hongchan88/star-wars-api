@@ -1,18 +1,24 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Characters from "../../components/characters";
-const FilmsbyId = ({ data, characterData }) => {
+import Link from "next/link";
+
+const FilmsbyId = ({ dataFilmsById, characterData }) => {
   console.log(characterData);
-  const { title, directed, producer, characters } = data.result.properties;
+  const { title, directed, producer, characters } =
+    dataFilmsById.result.properties;
   const router = useRouter();
-  const { id } = router.query;
+
   return (
     <>
-      <h1>{title}</h1>
+      <div>
+        <h1>{title}</h1>
+      </div>
 
-      {characters.map((character) => {
+      {characterData.map((character) => {
         return <Characters character={character} />;
       })}
+      <Link href="/">Back Home</Link>
     </>
   );
 };
@@ -35,25 +41,41 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   console.log(params);
-  const res = await fetch(`https://www.swapi.tech/api/films/${params.id}`);
-  const data = await res.json();
+  const resFilmsById = await fetch(
+    `https://www.swapi.tech/api/films/${params.id}`
+  );
+  const dataFilmsById = await resFilmsById.json();
 
-  const { characters } = data.result.properties;
-  const characterData = characters.map(async (characterUrl) => {
+  const { characters } = dataFilmsById?.result?.properties;
+
+  const getCharData = async (characterUrl) => {
     const res = await fetch(`${characterUrl}`);
     const data = await res.json();
-    return characterData;
-  });
+    return data;
+  };
 
-  console.log(characterData);
+  // Promise.all for using map function
+  const characterData = await Promise.all(
+    characters.map(async (characterUrl) => {
+      const data = await getCharData(characterUrl);
 
-  if (!data) {
+      return data;
+    })
+  );
+
+  //get only one chracter data
+  // const cData = await getCharData(characters[0]).then((data) => {
+  //   console.log(data, "sdfs");
+  //   return data;
+  // });
+
+  if (!dataFilmsById || !characterData) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { dataFilmsById, characterData }, // will be passed to the page component as props
   };
 }

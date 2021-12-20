@@ -1,12 +1,35 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 import Movie from "../components/movie.js";
 import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
 export default function Home({ data }) {
   const { result } = data;
+  const [favourite, setFavourite] = useState({});
 
-  console.log(result[0].uid);
+  console.log(favourite);
+
+  console.log(result);
+  const clickFavourite = (movieId) => {
+    if (
+      favourite[movieId] == undefined ||
+      favourite[movieId].favourite == false
+    ) {
+      console.log("hi", movieId);
+
+      setFavourite((prev) => {
+        const updatedFav = { ...prev, [movieId]: { favourite: true } };
+        return updatedFav;
+      });
+    } else if (favourite[movieId]?.favourite == true) {
+      setFavourite((prev) => {
+        const updatedFav = { ...prev, [movieId]: { favourite: false } };
+        return updatedFav;
+      });
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -25,13 +48,35 @@ export default function Home({ data }) {
           Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
-
+        <p>Favourite movies</p>
+        <div className={styles.grid}>
+          {result.map((movie) => {
+            if (favourite[movie.uid]?.favourite == true) {
+              return (
+                <a className={styles.card}>
+                  <Movie
+                    movie={movie}
+                    key={movie.uid}
+                    clickFavourite={clickFavourite}
+                  />
+                </a>
+              );
+            }
+          })}
+        </div>
+        <p>All movies</p>
         <div className={styles.grid}>
           {result.map((movie) => {
             return (
-              <a href="https://nextjs.org/docs" className={styles.card}>
-                <Movie movie={movie} />
-              </a>
+              <Link href={`/films/${movie.uid}`}>
+                <a className={styles.card}>
+                  <Movie
+                    movie={movie}
+                    key={movie.uid}
+                    clickFavourite={clickFavourite}
+                  />
+                </a>
+              </Link>
             );
           })}
         </div>
