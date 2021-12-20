@@ -1,17 +1,34 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Movie from "../components/movie.js";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 
 export default function Home({ data }) {
   const { result } = data;
   const [favourite, setFavourite] = useState({});
+  const { register, handleSubmit, watch } = useForm();
+  const [filteredData, setFilteredData] = useState();
+  const onSubmit = (data) => {
+    console.log(data.search);
+    const filteredData = result.filter((movie) => {
+      return movie.properties.title
+        .toLowerCase()
+        .includes(data.search.toLowerCase());
+    });
+    setFilteredData(filteredData);
+  };
+  useEffect(() => {
+    const filteredData = result.filter((movie) => {
+      return movie.properties.title
+        .toLowerCase()
+        .includes(watch("search").toLowerCase());
+    });
+    setFilteredData(filteredData);
+  }, [watch("search")]);
 
-  console.log(favourite);
-
-  console.log(result);
   const clickFavourite = (movieId) => {
     if (
       favourite[movieId] == undefined ||
@@ -65,20 +82,42 @@ export default function Home({ data }) {
           })}
         </div>
         <p>All movies</p>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            {...register("search", {
+              required: "Please enter search term",
+            })} // custom message
+          />
+          <input type="submit" />
+        </form>
         <div className={styles.grid}>
-          {result.map((movie) => {
-            return (
-              <Link href={`/films/${movie.uid}`}>
-                <a className={styles.card}>
-                  <Movie
-                    movie={movie}
-                    key={movie.uid}
-                    clickFavourite={clickFavourite}
-                  />
-                </a>
-              </Link>
-            );
-          })}
+          {filteredData
+            ? filteredData.map((movie) => {
+                return (
+                  <Link href={`/films/${movie.uid}`}>
+                    <a className={styles.card}>
+                      <Movie
+                        movie={movie}
+                        key={movie.uid}
+                        clickFavourite={clickFavourite}
+                      />
+                    </a>
+                  </Link>
+                );
+              })
+            : result.map((movie) => {
+                return (
+                  <Link href={`/films/${movie.uid}`}>
+                    <a className={styles.card}>
+                      <Movie
+                        movie={movie}
+                        key={movie.uid}
+                        clickFavourite={clickFavourite}
+                      />
+                    </a>
+                  </Link>
+                );
+              })}
         </div>
       </main>
 
