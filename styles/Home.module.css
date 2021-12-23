@@ -1,5 +1,4 @@
 .container {
-  padding: 0 2rem;
 }
 
 .main {
@@ -10,6 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: black;
 }
 
 .footer {
@@ -113,4 +113,16 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.banner {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640146498/portfolio/unpdspjkjxcug3zari4k.jpg);
+  background-size: cover;
 }

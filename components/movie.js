@@ -1,22 +1,49 @@
 import React from "react";
 import Link from "next/link";
+import styled from "./movie.module.scss";
 const Movie = ({ movie, clickFavourite }) => {
-  const { title, url, created, directed, uid } = movie.properties;
-  console.log("movie");
-
+  const { title, url, created, director, release_date } = movie.properties;
+  const movieImg = {
+    1: {
+      ImgUrl:
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640177546/portfolio/eiaj4uqsbmdjytxf7hko.jpg",
+    },
+    2: {
+      ImgUrl:
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178129/portfolio/mdbwhbozmdboht1wsmyg.jpg",
+    },
+    3: {
+      ImgUrl:
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178585/portfolio/ljlt53grbh15hjkdas59.jpg",
+    },
+    4: {
+      ImgUrl:
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178923/portfolio/icf7t7lceh3rmwv8yzi4.jpg",
+    },
+    5: {
+      ImgUrl:
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178921/portfolio/cj3kg2djvi0qstvzsxco.jpg",
+    },
+    6: {
+      ImgUrl:
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178854/portfolio/ddo1juuw3wbigublznkq.png",
+    },
+  };
+  console.log(movie.uid);
   const favourite = () => {
-    clickFavourite(movie.uid);
+    clickFavourite(movieuid);
   };
   return (
-    <>
-      <Link href={`/films/${movie.uid}`}>
-        <h1>{title}</h1>
-      </Link>
+    <div className={styled.container}>
+      <img src={movieImg[movie.uid]?.ImgUrl} className={styled.movieimg} />
 
-      <p>{directed}</p>
-
-      <div onClick={favourite}> click</div>
-    </>
+      <div className={styled.movieinfo}>
+        <p className={styled.title}>
+          {title} ({release_date.slice(0, 4)})
+        </p>
+        <p onClick={favourite}> click</p>
+      </div>
+    </div>
   );
 };
 

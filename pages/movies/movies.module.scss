@@ -1,0 +1,84 @@
+.slider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  top: -300px;
+}
+.gridcontainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  gap: 20px;
+  width: 100%;
+  position: absolute;
+}
+.row {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column: 2 / 5;
+  width: 100%;
+
+  position: absolute;
+}
+.box {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  color: red;
+  font-size: 12px;
+}
+
+.title {
+  margin-top: 100px;
+}
+
+.container {
+  height: 20vh;
+  background-color: black;
+}
+
+.footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg);
+  background-size: cover;
+}
+
+.back {
+  color: red;
+  display: grid;
+  grid-column: 1 / 2;
+  grid-row: 1/2;
+  height: 100%;
+}
+.next {
+  color: red;
+  display: grid;
+
+  grid-column: 5 / 6;
+  grid-row: 1/2;
+
+  height: 100%;
+}
+.insidegrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

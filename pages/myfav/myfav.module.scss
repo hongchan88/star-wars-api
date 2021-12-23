@@ -1,0 +1,20 @@
+.main {
+  margin-top: 100px;
+}
+.slider {
+  position: relative;
+  top: 100px;
+}
+.row {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  position: absolute;
+  width: 100%;
+}
+.box {
+  background-color: white;
+  height: 200px;
+  color: red;
+  font-size: 66px;
+}

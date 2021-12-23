@@ -9,6 +9,7 @@
   padding: 20px 60px;
   color: white;
   background-color: black;
+  z-index: 1;
 }
 
 .col {
@@ -56,4 +57,27 @@
 
   margin: 0 auto;
   background-color: red;
+}
+
+.search {
+  color: white;
+  display: flex;
+  align-items: center;
+  position: relative;
+  svg {
+    height: 25px;
+  }
+}
+
+.input {
+  transform-origin: right center;
+  position: absolute;
+  right: 0px;
+  padding: 5px 10px;
+  padding-left: 40px;
+  z-index: -1;
+  color: white;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid white;
 }
