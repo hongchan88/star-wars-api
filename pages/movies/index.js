@@ -5,9 +5,26 @@ import Movie from "../../components/movie.js";
 
 import styled from "./movies.module.scss";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header.jsx";
 import { AnimatePresence, motion } from "framer-motion";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+
+const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: -50,
+    transition: {
+      delay: 0.3,
+      duaration: 0.3,
+      type: "tween",
+    },
+  },
+};
 
 export default function Movies({ data }) {
   const { result } = data;
@@ -19,8 +36,12 @@ export default function Movies({ data }) {
   const [direction, setDirection] = useState(true);
 
   const [innerWidth, setInnerWidth] = useState();
-
+  const router = useRouter();
   const offset = 3;
+
+  const moveToFilmPage = (movie, router) => {
+    router.push(`/films/${movie.uid}`);
+  };
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -83,8 +104,6 @@ export default function Movies({ data }) {
       favourite[movieId] == undefined ||
       favourite[movieId].favourite == false
     ) {
-      console.log("hi", movieId);
-
       setFavourite((prev) => {
         const updatedFav = { ...prev, [movieId]: { favourite: true } };
         return updatedFav;
@@ -114,22 +133,37 @@ export default function Movies({ data }) {
         <div className={styled.slider}>
           <div className={styled.gridcontainer}>
             <div className={styled.back} onClick={decreaseIndex}>
-              <p className={styled.insidegrid}>Back</p>
+              <motion.p
+                whileHover={{ scale: 1.3 }}
+                className={styled.insidegrid}
+              >
+                {" "}
+                <FaArrowLeft size={50} />
+              </motion.p>
             </div>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+            <AnimatePresence
+              initial={false}
+              custom={direction}
+              onExitComplete={toggleLeaving}
+            >
               <motion.div
                 className={styled.row}
-                initial={{
-                  x: innerWidth + 5,
-                  opacity: 0.2,
+                custom={direction}
+                initial={(direction) => {
+                  return {
+                    x: direction ? innerWidth + 5 : -innerWidth - 5,
+                    opacity: 0.2,
+                  };
                 }}
                 animate={{
                   x: 0,
                   opacity: 1,
                 }}
-                exit={{
-                  x: -innerWidth - 5,
-                  opacity: 0.2,
+                exit={(direction) => {
+                  return {
+                    x: direction ? -innerWidth - 5 : innerWidth + 5,
+                    opacity: 0.2,
+                  };
                 }}
                 transition={{
                   type: "tween",
@@ -140,18 +174,33 @@ export default function Movies({ data }) {
                 {result
                   ?.slice(offset * index, offset * index + offset)
                   .map((movie) => (
-                    <motion.div className={styled.box} key={movie.uid}>
+                    <motion.div
+                      variants={boxVariants}
+                      initial="normal"
+                      whileHover="hover"
+                      className={styled.box}
+                      transition={{ type: "tween" }}
+                      key={movie.uid}
+                      // onClick={() => router.push(`/films/${movie.uid}`)}
+                      onClick={() => moveToFilmPage(movie, router)}
+                    >
                       <Movie
                         movie={movie}
                         key={movie.uid}
                         clickFavourite={clickFavourite}
+                        favourite={favourite[movie.uid]?.favourite}
                       />
                     </motion.div>
                   ))}
               </motion.div>
             </AnimatePresence>
             <div className={styled.next} onClick={incraseIndex}>
-              <p className={styled.insidegrid}>Next</p>
+              <motion.p
+                whileHover={{ scale: 1.3 }}
+                className={styled.insidegrid}
+              >
+                <FaArrowRight size={50} />
+              </motion.p>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Characters from "../../components/characters";
 import Link from "next/link";
+import Header from "../../components/header";
 
 const FilmsbyId = ({ dataFilmsById, characterData }) => {
   console.log(characterData);
@@ -11,6 +12,7 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
 
   return (
     <>
+      <Header />
       <div>
         <h1>{title}</h1>
       </div>
@@ -56,7 +58,7 @@ export async function getStaticProps({ params }) {
 
   // Promise.all for using map function
   const characterData = await Promise.all(
-    characters.map(async (characterUrl) => {
+    characters.slice(0, 3).map(async (characterUrl) => {
       const data = await getCharData(characterUrl);
 
       return data;

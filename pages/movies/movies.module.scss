@@ -26,7 +26,7 @@
   background-color: black;
   height: 100%;
   width: 100%;
-  color: red;
+  cursor: pointer;
   font-size: 12px;
 }
 
@@ -61,20 +61,27 @@
 }
 
 .back {
-  color: red;
+  color: white;
   display: grid;
   grid-column: 1 / 2;
-  grid-row: 1/2;
+  opacity: 0.4;
+  grid-row: 2/3;
   height: 100%;
+  &:hover {
+    opacity: 1;
+  }
 }
 .next {
-  color: red;
+  color: white;
   display: grid;
-
+  opacity: 0.4;
   grid-column: 5 / 6;
-  grid-row: 1/2;
+  grid-row: 2/3;
 
   height: 100%;
+  &:hover {
+    opacity: 1;
+  }
 }
 .insidegrid {
   display: flex;

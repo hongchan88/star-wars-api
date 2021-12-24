@@ -1,7 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import styled from "./movie.module.scss";
-const Movie = ({ movie, clickFavourite }) => {
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { motion } from "framer-motion";
+const Movie = ({ movie, clickFavourite, favourite }) => {
+  console.log(favourite);
   const { title, url, created, director, release_date } = movie.properties;
   const movieImg = {
     1: {
@@ -30,18 +33,32 @@ const Movie = ({ movie, clickFavourite }) => {
     },
   };
   console.log(movie.uid);
-  const favourite = () => {
-    clickFavourite(movieuid);
+  const addToFav = () => {
+    clickFavourite(movie.uid);
   };
   return (
     <div className={styled.container}>
       <img src={movieImg[movie.uid]?.ImgUrl} className={styled.movieimg} />
 
-      <div className={styled.movieinfo}>
-        <p className={styled.title}>
-          {title} ({release_date.slice(0, 4)})
-        </p>
-        <p onClick={favourite}> click</p>
+      <div className={styled.infocontainer}>
+        <div className={styled.movieinfo}>
+          <span className={styled.title}>{title}</span>
+          <span>{release_date.slice(0, 4)}</span>
+        </div>
+        <div className={styled.favourite}>
+          <motion.p
+            whileHover={{ scale: "1.3" }}
+            whileTap={{ rotateZ: 90 }}
+            transition={{ type: "spring" }}
+            onClick={addToFav}
+          >
+            {favourite ? (
+              <AiFillHeart size={25} />
+            ) : (
+              <AiOutlineHeart size={25} />
+            )}
+          </motion.p>
+        </div>
       </div>
     </div>
   );
