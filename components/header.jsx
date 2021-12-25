@@ -4,9 +4,10 @@ import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
 import { useRouter } from "next/router";
 
-const Header = (props) => {
+const Header = () => {
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
+
   const inputAnimation = useAnimation();
   const toggleSearch = () => {
     if (searchOpen) {
@@ -33,7 +34,7 @@ const Header = (props) => {
             </li>
           </Link>
 
-          <Link href="/movies">
+          <Link href={{ pathname: "/movies" }}>
             <li className={styled.item}>
               Movies{" "}
               {router.pathname === "/movies" && (
@@ -41,10 +42,10 @@ const Header = (props) => {
               )}
             </li>
           </Link>
-          <Link href="/myfav">
+          <Link href={{ pathname: "/myfavourite" }}>
             <li className={styled.item}>
               My Favourite
-              {router.pathname === "/myfav" ? (
+              {router.pathname === "/myfavourite" ? (
                 <motion.span className={styled.circle} layoutId="circle" />
               ) : null}
             </li>

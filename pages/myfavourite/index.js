@@ -3,13 +3,13 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Movie from "../../components/movie.js";
 
-import styled from "./movies.module.scss";
+import styled from "./myfavourite.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header.jsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { FaArrowRight, FaArrowLeft, FaCalculator } from "react-icons/fa";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 const boxVariants = {
   normal: {
@@ -26,7 +26,7 @@ const boxVariants = {
   },
 };
 
-export default function Movies({ data }) {
+export default function MyFavourite({ data }) {
   const { result } = data;
   const [favourite, setFavourite] = useState({});
   const { register, handleSubmit, watch } = useForm();
@@ -38,18 +38,6 @@ export default function Movies({ data }) {
   const [innerWidth, setInnerWidth] = useState();
 
   const offset = 3;
-
-  const favList = [];
-  const NfavList = [];
-  const filterFavMovieTop = result.map((movie) => {
-    const favMovie = Object.keys(favourite).filter((key) => movie.uid === key);
-    if (movie.uid === favMovie[0]) {
-      favList.push(movie);
-    } else {
-      NfavList.push(movie);
-    }
-  });
-  console.log([...favList, ...NfavList]);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -109,15 +97,17 @@ export default function Movies({ data }) {
   // }, [watch("search")]);
 
   const clickFavourite = (movieId) => {
-    if (favourite[movieId] == undefined) {
+    if (
+      favourite[movieId] == undefined ||
+      favourite[movieId].favourite == false
+    ) {
       setFavourite((prev) => {
         const updatedFav = { ...prev, [movieId]: { favourite: true } };
         return updatedFav;
       });
     } else if (favourite[movieId]?.favourite == true) {
       setFavourite((prev) => {
-        const updatedFav = { ...prev };
-        delete updatedFav[movieId];
+        const updatedFav = { ...prev, [movieId]: { favourite: false } };
         return updatedFav;
       });
     }
@@ -178,7 +168,7 @@ export default function Movies({ data }) {
                 }}
                 key={index}
               >
-                {[...favList, ...NfavList]
+                {result
                   ?.slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <motion.div
@@ -210,65 +200,6 @@ export default function Movies({ data }) {
             </div>
           </div>
         </div>
-        {/* <div className={styled.direction}>
-            <div className={styled.next}>Next</div>
-            <div className={styled.next}>before</div>
-          </div>
-        </div> */}
-        {/* <p>Favourite movies</p>
-        <div className={styles.grid}>
-          {result.map((movie) => {
-            if (favourite[movie.uid]?.favourite == true) {
-              return (
-                <a className={styles.card}>
-                  <Movie
-                    movie={movie}
-                    key={movie.uid}
-                    clickFavourite={clickFavourite}
-                  />
-                </a>
-              );
-            }
-          })}
-        </div>
-        <p>All movies</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            {...register("search", {
-              required: "Please enter search term",
-            })} // custom message
-          />
-          <input type="submit" />
-        </form>
-        <div className={styles.grid}>
-          {filteredData
-            ? filteredData.map((movie) => {
-                return (
-                  <Link href={`/films/${movie.uid}`}>
-                    <a className={styles.card}>
-                      <Movie
-                        movie={movie}
-                        key={movie.uid}
-                        clickFavourite={clickFavourite}
-                      />
-                    </a>
-                  </Link>
-                );
-              })
-            : result.map((movie) => {
-                return (
-                  <Link href={`/films/${movie.uid}`}>
-                    <a className={styles.card}>
-                      <Movie
-                        movie={movie}
-                        key={movie.uid}
-                        clickFavourite={clickFavourite}
-                      />
-                    </a>
-                  </Link>
-                );
-              })}
-        </div> */}
       </main>
 
       <footer className={styled.footer}>
@@ -287,7 +218,8 @@ export default function Movies({ data }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
+  console.log(context.query, "query");
   const res = await fetch(`https://www.swapi.tech/api/films`);
   const data = await res.json();
 
