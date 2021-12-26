@@ -36,20 +36,42 @@ export default function Movies({ data }) {
   const [direction, setDirection] = useState(true);
 
   const [innerWidth, setInnerWidth] = useState();
+  const [clickFav, setClickFav] = useState(false);
+  const [hoverEnd, setHoverEnd] = useState(false);
+  const [movieData, setMovieData] = useState([]);
 
   const offset = 3;
 
-  const favList = [];
-  const NfavList = [];
-  const filterFavMovieTop = result.map((movie) => {
-    const favMovie = Object.keys(favourite).filter((key) => movie.uid === key);
-    if (movie.uid === favMovie[0]) {
-      favList.push(movie);
-    } else {
-      NfavList.push(movie);
-    }
-  });
-  console.log([...favList, ...NfavList]);
+  const filterFavMovieTop = () => {
+    const favList = [];
+    const NfavList = [];
+
+    result.map((movie) => {
+      const favMovie = Object.keys(favourite).filter(
+        (key) => movie.uid === key
+      );
+      if (movie.uid === favMovie[0]) {
+        favList.push(movie);
+      } else {
+        NfavList.push(movie);
+      }
+    });
+    setMovieData([...favList, ...NfavList]);
+  };
+  useEffect(() => {
+    // setMovieData((prev) => [...favList, ...NfavList]);
+    filterFavMovieTop();
+    console.log("initial");
+  }, [favourite]);
+
+  // useEffect(() => {
+  //   if (hoverEnd === false) {
+  //     return;
+  //   } else {
+  //     setMovieData((prev) => [...favList, ...NfavList]);
+  //   }
+  // }, [favList]);
+  console.log(movieData);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -109,6 +131,8 @@ export default function Movies({ data }) {
   // }, [watch("search")]);
 
   const clickFavourite = (movieId) => {
+    // setHoverEnd(true);
+
     if (favourite[movieId] == undefined) {
       setFavourite((prev) => {
         const updatedFav = { ...prev, [movieId]: { favourite: true } };
@@ -178,13 +202,13 @@ export default function Movies({ data }) {
                 }}
                 key={index}
               >
-                {[...favList, ...NfavList]
+                {movieData
                   ?.slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <motion.div
                       variants={boxVariants}
                       initial="normal"
-                      whileHover="hover"
+                      whileHover={"hover"}
                       className={styled.box}
                       transition={{ type: "tween" }}
                       key={movie.uid}

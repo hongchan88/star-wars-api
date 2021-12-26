@@ -9,31 +9,31 @@ const Movie = ({ movie, clickFavourite, favourite, moveToFilmPage }) => {
   const movieImg = {
     1: {
       ImgUrl:
-        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640177546/portfolio/eiaj4uqsbmdjytxf7hko.jpg"
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640177546/portfolio/eiaj4uqsbmdjytxf7hko.jpg",
     },
     2: {
       ImgUrl:
-        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178129/portfolio/mdbwhbozmdboht1wsmyg.jpg"
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178129/portfolio/mdbwhbozmdboht1wsmyg.jpg",
     },
     3: {
       ImgUrl:
-        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178585/portfolio/ljlt53grbh15hjkdas59.jpg"
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178585/portfolio/ljlt53grbh15hjkdas59.jpg",
     },
     4: {
       ImgUrl:
-        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178923/portfolio/icf7t7lceh3rmwv8yzi4.jpg"
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178923/portfolio/icf7t7lceh3rmwv8yzi4.jpg",
     },
     5: {
       ImgUrl:
-        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178921/portfolio/cj3kg2djvi0qstvzsxco.jpg"
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178921/portfolio/cj3kg2djvi0qstvzsxco.jpg",
     },
     6: {
       ImgUrl:
-        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178854/portfolio/ddo1juuw3wbigublznkq.png"
-    }
+        "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178854/portfolio/ddo1juuw3wbigublznkq.png",
+    },
   };
   console.log(movie.uid);
-  const addToFav = () => {
+  const addToFav = (e) => {
     clickFavourite(movie.uid);
   };
   return (
@@ -49,9 +49,8 @@ const Movie = ({ movie, clickFavourite, favourite, moveToFilmPage }) => {
         <div className={styled.favourite}>
           <motion.p
             whileHover={{ scale: "1.3" }}
-            whileTap={{ rotateZ: 90 }}
             transition={{ type: "spring" }}
-            onClick={addToFav}
+            onClick={(e) => addToFav(e)}
           >
             {favourite ? (
               <AiFillHeart size={25} />
