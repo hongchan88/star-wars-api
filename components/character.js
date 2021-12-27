@@ -12,7 +12,7 @@ const Character = ({ character, charactersApi }) => {
     homeworld,
     mass,
     name,
-    skin_color
+    skin_color,
   } = character.result.properties;
   console.log(character.result.properties.name);
   return (
@@ -37,7 +37,7 @@ export const getServerSideProps = async (context) => {
   console.log("context");
   return {
     props: {
-      data: "heelo"
-    }
+      data: "heelo",
+    },
   };
 };

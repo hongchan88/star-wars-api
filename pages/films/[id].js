@@ -5,18 +5,20 @@ import Link from "next/link";
 import Header from "../../components/header";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/Im";
 import { useRouter } from "next/router";
 
 const boxVariants = {
   normal: {
     scale: 1,
+    y: 0,
   },
   hover: {
     scale: 1.3,
     y: -50,
     transition: {
       delay: 0.3,
-      duaration: 0.3,
+      duration: 0.3,
       type: "tween",
     },
   },
@@ -25,9 +27,10 @@ const boxVariants = {
 const infoVariants = {
   hover: {
     opacity: 1,
+    y: 120,
     transition: {
       delay: 0.5,
-      duaration: 0.1,
+      duration: 0.4,
       type: "tween",
     },
   },
@@ -48,14 +51,14 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
     producer,
     characters: charactersApi,
   } = dataFilmsById.result.properties;
-  console.log(charactersApi?.length, "api");
+
   const offset = 6;
   const divStyle = {
     height: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-
+    position: "relative",
     backgroundImage:
       'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),url("https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg")',
     backgroundSize: "cover",
@@ -128,12 +131,22 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
       { shallow: true }
     );
   };
+  const clickedCharacter =
+    characterQuery &&
+    characterData.find((character) => character.result.uid === characterQuery);
+
+  const pushBack = () => {
+    router.push("/movies");
+  };
 
   return (
     <>
       <Header />
       <div style={divStyle}>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+          <div className={styled.title}>
+            <h1>Characters from {title}</h1>
+          </div>
           <AnimatePresence>
             <>
               {characterQuery ? (
@@ -143,20 +156,63 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
                     className={styled.overlay}
                   />
                   <motion.div
-                    layoutId={router.query.characterId + ""}
+                    layoutId={router.query.characterId}
+                    className={styled.charinfobox}
                     style={{
-                      position: "absolute",
-
-                      width: "40vw",
-                      height: "80vh",
-                      background: "red",
                       top: scrollY.get() + 100,
-                      left: "0",
-                      right: "0",
-                      margin: "0 auto",
-                      zIndex: "1",
                     }}
-                  ></motion.div>
+                  >
+                    <div
+                      className={styled.charimg}
+                      style={{
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8kz8OZm6SbGYsOm3gNx6sqi2dPA2FUHZWnxmVnVXqX-3IIJXJAdsFYvq3btLr4hs3gHs&usqp=CAU 
+                        )`,
+                      }}
+                    ></div>
+                    {clickedCharacter && (
+                      <>
+                        <motion.div
+                          whileHover={{ scale: 1.3 }}
+                          className={styled.exit}
+                          onClick={clickOverlay}
+                        >
+                          <ImCancelCircle />
+                        </motion.div>
+
+                        <div className={styled.charinfo}>
+                          <p>
+                            Name: {clickedCharacter.result.properties.name}{" "}
+                          </p>
+                          <p>
+                            Height: {clickedCharacter.result.properties.height}{" "}
+                          </p>
+                          <p>
+                            Birth Year:{" "}
+                            {clickedCharacter.result.properties.birth_year}
+                          </p>
+
+                          <p>
+                            Eye color:{" "}
+                            {clickedCharacter.result.properties.eye_color}
+                          </p>
+                          <p>
+                            Gender: {clickedCharacter.result.properties.gender}
+                          </p>
+                          <p>
+                            Hair color:{" "}
+                            {clickedCharacter.result.properties.hair_color}
+                          </p>
+
+                          <p>Mass: {clickedCharacter.result.properties.mass}</p>
+
+                          <p>
+                            Skin color:{" "}
+                            {clickedCharacter.result.properties.skin_color}
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </motion.div>
                 </>
               ) : null}
             </>
@@ -206,7 +262,7 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
                   ?.slice(offset * index, offset * index + offset)
                   .map((character) => (
                     <motion.div
-                      layoutId={character.result.uid + ""}
+                      layoutId={character.result.uid}
                       variants={boxVariants}
                       initial="normal"
                       whileHover="hover"
@@ -215,18 +271,17 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
                       key={character.result.uid}
                       // onClick={() => router.push(`/films/${movie.uid}`)}
                     >
-                      {
-                        <Character
-                          character={character}
-                          charactersApi={charactersApi}
-                        />
-                      }
+                      <Character
+                        character={character}
+                        charactersApi={charactersApi}
+                      />
+
                       <motion.div
                         variants={infoVariants}
                         className={styled.infobox}
                       >
                         <h4 onClick={() => onMoreInfoClicked(character)}>
-                          more info
+                          More info
                         </h4>
                       </motion.div>
                     </motion.div>
@@ -242,8 +297,13 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
               </motion.p>
             </div>
           </div>
+          <div></div>
         </div>
-        <Link href="/">Back Home</Link>
+        <div className={styled.backhome}>
+          <p onClick={pushBack} style={{ color: "white", cursor: "pointer" }}>
+            Back to movies page
+          </p>
+        </div>
       </div>
     </>
   );
