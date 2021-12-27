@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "./header.module.scss";
 import Link from "next/link";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
@@ -10,7 +10,8 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const { register, handleSubmit, watch } = useForm();
   const inputAnimation = useAnimation();
-
+  const { scrollY } = useViewportScroll();
+  const [scrolly, setScrolly] = useState();
   const toggleSearch = () => {
     if (searchOpen) {
       inputAnimation.start({
@@ -31,9 +32,19 @@ const Header = () => {
       { shallow: true }
     );
   };
+  useEffect(() => {
+    scrollY.onChange(() => {});
+  }, [scrollY]);
 
   return (
-    <nav className={styled.nav}>
+    <motion.nav
+      animate={{
+        backgroundColor:
+          scrollY.get() > 20 ? "rgba(0 , 0, 0, 1)" : "rgba(0 , 0, 0, 0.2)",
+      }}
+      transition={{ type: "linear" }}
+      className={styled.nav}
+    >
       <div className={styled.col}>
         <svg className={styled.logo}></svg>
         <ul className={styled.items}>
@@ -82,7 +93,7 @@ const Header = () => {
           />
         </form>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

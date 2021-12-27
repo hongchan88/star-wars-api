@@ -22,4 +22,5 @@
 - [x] hovering, slider on character page of the movie
 
 - [] Loading ...
-- [] search function
+- [] header transparent on fixed and when scroll down change to black background
+- [x] search function

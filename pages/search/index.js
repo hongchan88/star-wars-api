@@ -58,7 +58,7 @@ export default function Search({ data }) {
 
         <div className={styled.slider}>
           <div className={styled.gridcontainer}>
-            {filteredData.length > 0 ? (
+            {filteredData?.length > 0 ? (
               filteredData?.map((movie) => (
                 <motion.div
                   variants={boxVariants}
