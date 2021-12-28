@@ -6,7 +6,7 @@ import Header from "../../components/header";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
-import { ImCancelCircle } from "react-icons/Im";
+import { MdOutlineCancel } from "react-icons/md";
 import { useRouter } from "next/router";
 import Loading from "../../components/loading";
 import Footer from "../../components/footer";
@@ -190,7 +190,7 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
                         className={styled.exit}
                         onClick={clickOverlay}
                       >
-                        <ImCancelCircle />
+                        <MdOutlineCancel />
                       </motion.div>
 
                       <div className={styled.charinfo}>
@@ -361,7 +361,7 @@ export async function getStaticProps({ params }) {
 
   // Promise.all for using map function
   const characterData = await Promise.all(
-    characters.slice(0, 8).map(async (characterUrl) => {
+    characters.map(async (characterUrl) => {
       const data = await getCharData(characterUrl);
 
       return data;

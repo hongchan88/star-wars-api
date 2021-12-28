@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/home.module.scss";
 
 import Header from "../components/header.jsx";
 import Loading from "../components/loading.js";

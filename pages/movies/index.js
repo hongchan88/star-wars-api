@@ -7,8 +7,8 @@ import styled from "./movies.module.scss";
 
 import { useForm } from "react-hook-form";
 import Header from "../../components/header.jsx";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
-import { FaArrowRight, FaArrowLeft, FaCalculator } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Loading from "../../components/loading.js";
 import Footer from "../../components/footer.js";
 
