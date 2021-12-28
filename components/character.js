@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "./character.module.scss";
 
-const Character = ({ character, charactersApi }) => {
+const Character = ({ character }) => {
   const { name } = character.result.properties;
 
   return (
@@ -21,11 +21,3 @@ const Character = ({ character, charactersApi }) => {
 };
 
 export default Character;
-
-export const getServerSideProps = async (context) => {
-  return {
-    props: {
-      data: "heelo",
-    },
-  };
-};

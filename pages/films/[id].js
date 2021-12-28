@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "./films.module.scss";
 import Character from "../../components/character";
-
+import Head from "next/head";
 import Header from "../../components/header";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
@@ -144,6 +144,11 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
 
   return (
     <>
+      <Head>
+        <title>Star Wars movie search</title>
+        <meta name="description" content="Star Wars movie search" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {!loading && <Loading />}
       <div
         className={styled.banner}

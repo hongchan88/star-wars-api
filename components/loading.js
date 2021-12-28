@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "./loading.module.scss";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const boxVariant = {
   start: {
