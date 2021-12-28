@@ -360,19 +360,14 @@ export async function getStaticProps({ params }) {
   };
 
   // Promise.all for using map function
+  // get only 8 data as api server fails to get all data
   const characterData = await Promise.all(
-    characters.map(async (characterUrl) => {
+    characters.slice(0, 7).map(async (characterUrl) => {
       const data = await getCharData(characterUrl);
 
       return data;
     })
   );
-
-  //get only one chracter data
-  // const cData = await getCharData(characters[0]).then((data) => {
-  //   console.log(data, "sdfs");
-  //   return data;
-  // });
 
   if (!dataFilmsById || !characterData) {
     return {
