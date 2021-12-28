@@ -1,9 +1,68 @@
-.banner {
-  height: 100vh;
+.main {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px;
+  align-items: center;
+  padding-bottom: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.textcontainer {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  top: 0;
+  line-height: 1.15;
+  font-size: 3rem;
+  color: white;
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  scale: 1;
+}
+.moreinfo {
+  line-height: 1.5;
+  font-size: 1.5rem;
+  border: 3px white solid;
+  background-color: transparent;
+  padding: 0 10px;
+  display: flex;
+  width: 30%;
+  justify-content: center;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: white;
+    color: black;
+
+    transition: all ease-in-out 0.4s;
+  }
+}
+
+.banner {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640146498/portfolio/unpdspjkjxcug3zari4k.jpg);
   background-size: cover;

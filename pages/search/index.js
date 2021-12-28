@@ -1,16 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import Movie from "../../components/movie.js";
-
 import styled from "./search.module.scss";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
-
+import { motion } from "framer-motion";
 import Header from "../../components/header.jsx";
-import Searchresult from "../../components/searchresult.js";
 import Loading from "../../components/loading.js";
+import Footer from "../../components/footer.js";
 
 const boxVariants = {
   normal: {
@@ -27,10 +23,10 @@ const boxVariants = {
   },
 };
 
-export default function Search({ data, loading }) {
+export default function Search({ data, loading, clickFavourite, favourite }) {
   const { result } = data;
   const router = useRouter();
-  console.log(router.query.keyword);
+
   const [filteredData, setFilteredData] = useState();
 
   useEffect(() => {
@@ -41,7 +37,6 @@ export default function Search({ data, loading }) {
     });
     setFilteredData(getSearchData);
   }, [router.query.keyword]);
-  console.log(filteredData);
 
   return (
     <div>
@@ -51,12 +46,8 @@ export default function Search({ data, loading }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {!loading && <Loading />}
-      <div className={styled.banner}></div>
-      <main className={styled.container}>
+      <div className={styled.banner}>
         <Header />
-        {/* <h1 className={styled.title} onClick={incraseIndex}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1> */}
 
         <div className={styled.slider}>
           <div className={styled.gridcontainer}>
@@ -70,7 +61,12 @@ export default function Search({ data, loading }) {
                   transition={{ type: "tween" }}
                   key={movie.uid}
                 >
-                  <Searchresult movie={movie} key={movie.uid} />
+                  <Movie
+                    movie={movie}
+                    key={movie.uid}
+                    clickFavourite={clickFavourite}
+                    favourite={favourite[movie.uid]?.favourite}
+                  />
                 </motion.div>
               ))
             ) : (
@@ -80,26 +76,13 @@ export default function Search({ data, loading }) {
             )}
           </div>
         </div>
-      </main>
-
-      <footer className={styled.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      </div>
+      <Footer />
     </div>
   );
 }
 
 export async function getServerSideProps(context) {
-  console.log(context.query, "query");
   const res = await fetch(`https://www.swapi.tech/api/films`);
   const data = await res.json();
 

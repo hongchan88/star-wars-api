@@ -6,10 +6,12 @@ const boxVariant = {
   start: {
     opacity: 0,
     scale: 0,
+    rotateZ: 360,
   },
   end: {
     opacity: 1,
     scale: 1,
+    rotateZ: 0,
     transition: {
       duration: 0.5,
       type: "spring",
@@ -31,6 +33,7 @@ const imgVariant = {
   end: {
     opacity: 1,
     y: 0,
+
     transition: {
       duration: 0.5,
 
@@ -42,7 +45,7 @@ const imgVariant = {
 };
 
 const Loading = (props) => {
-  const [randomNumber, setRandomNumber] = useState([1, 2, 3, 4]);
+  const [randomNumber, setRandomNumber] = useState([]);
   const iconsArray = [
     "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640665378/portfolio/dtc9wkrhwjdq2d9s6ubx.png",
     "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640665171/portfolio/nfwcfxw2mxki6kmcl76r.png",
@@ -59,6 +62,10 @@ const Loading = (props) => {
     setInterval(() => {
       getRandomNumber();
     }, 5000);
+  }, []);
+
+  useEffect(() => {
+    getRandomNumber();
   }, []);
 
   const getRandomNumber = () => {
@@ -88,7 +95,6 @@ const Loading = (props) => {
     setRandomNumber([...numbers]);
   };
 
-  console.log(randomNumber);
   return (
     <>
       <div className={styled.loading_container}>

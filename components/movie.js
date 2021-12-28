@@ -3,9 +3,8 @@ import Link from "next/link";
 import styled from "./movie.module.scss";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
-const Movie = ({ movie, clickFavourite, favourite, moveToFilmPage }) => {
-  console.log(favourite);
-  const { title, url, created, director, release_date } = movie.properties;
+const Movie = ({ movie, clickFavourite, favourite }) => {
+  const { title, release_date } = movie.properties;
   const movieImg = {
     1: {
       ImgUrl:
@@ -32,7 +31,7 @@ const Movie = ({ movie, clickFavourite, favourite, moveToFilmPage }) => {
         "https://res.cloudinary.com/dwbsxpk82/image/upload/v1640178854/portfolio/ddo1juuw3wbigublznkq.png",
     },
   };
-  console.log(movie.uid);
+
   const addToFav = (e) => {
     clickFavourite(movie.uid);
   };
@@ -48,9 +47,10 @@ const Movie = ({ movie, clickFavourite, favourite, moveToFilmPage }) => {
         </div>
         <div className={styled.favourite}>
           <motion.p
-            whileHover={{ scale: "1.3" }}
+            whileTap={{ rotateZ: 180 }}
             transition={{ type: "spring" }}
             onClick={(e) => addToFav(e)}
+            whileHover={{ scale: 1.5 }}
           >
             {favourite ? (
               <AiFillHeart size={25} />

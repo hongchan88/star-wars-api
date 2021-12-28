@@ -1,8 +1,22 @@
+.banner {
+  height: 100vh;
+  width: 100vw;
+  min-height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg);
+  background-size: cover;
+}
 .slider {
-  position: relative;
   display: flex;
   justify-content: center;
-  top: -300px;
+  margin-top: 50px;
+  width: 100%;
 }
 .gridcontainer {
   display: flex;
@@ -12,7 +26,7 @@
 }
 
 .box {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   width: 25%;
 
@@ -23,11 +37,6 @@
   margin-top: 100px;
 }
 
-.container {
-  height: 20vh;
-  background-color: black;
-}
-
 .footer {
   display: flex;
   flex: 1;
@@ -35,18 +44,6 @@
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
-}
-
-.banner {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg);
-  background-size: cover;
 }
 
 .noresult {

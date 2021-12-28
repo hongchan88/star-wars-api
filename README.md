@@ -22,6 +22,6 @@
 - [x] hovering, slider on character page of the movie
 
 - [x] Loading ... (random array number -> get random icons)
-- [] favourite click when hover -> some times card will stay hover when changed to top list
+- [x] favourite click when hover -> some times card will stay hover when changed to top list
 
 - [x] search function

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "./films.module.scss";
 import Character from "../../components/character";
-import Link from "next/link";
+
 import Header from "../../components/header";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { BiArrowBack } from "react-icons/bi";
 import { ImCancelCircle } from "react-icons/Im";
 import { useRouter } from "next/router";
 import Loading from "../../components/loading";
+import Footer from "../../components/footer";
 
 const boxVariants = {
   normal: {
@@ -31,7 +33,7 @@ const infoVariants = {
     y: 120,
     transition: {
       delay: 0.5,
-      duration: 0.4,
+      duration: 0.3,
       type: "tween",
     },
   },
@@ -48,22 +50,24 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
   const { scrollY } = useViewportScroll();
   const {
     title,
-    directed,
     producer,
+    director,
+    release_date,
+    opening_crawl,
     characters: charactersApi,
   } = dataFilmsById.result.properties;
 
   const offset = 6;
-  const divStyle = {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    position: "relative",
-    backgroundImage:
-      'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),url("https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg")',
-    backgroundSize: "cover",
-  };
+  // const divStyle = {
+  //   height: "100vh",
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   justifyContent: "center",
+  //   position: "relative",
+  //   backgroundImage:
+  //     'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),url("https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg")',
+  //   backgroundSize: "cover",
+  // };
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -73,7 +77,7 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
   useEffect(() => {
     setInnerWidth(window.innerWidth);
   }, []);
-  console.log(innerWidth);
+
   const incraseIndex = () => {
     if (!innerWidth) {
       alert("getting user's window size");
@@ -81,7 +85,6 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
     }
     setDirection(true);
     if (characterData) {
-      console.log(leaving);
       if (leaving) return;
       const totalMovies = characterData.length;
       const maxIndex = Math.floor(totalMovies / offset);
@@ -97,10 +100,9 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
       return;
     }
     if (characterData) {
-      console.log(leaving);
       if (leaving) return;
       const totalMovies = characterData.length;
-      console.log(totalMovies);
+
       const maxIndex = Math.floor(totalMovies / offset);
       toggleLeaving();
 
@@ -144,83 +146,90 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
     <>
       <Header />
       {!loading && <Loading />}
-      <div style={divStyle}>
-        <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-          <div className={styled.title}>
-            <h1>Characters from {title}</h1>
-          </div>
-
-          <AnimatePresence>
-            <>
-              {characterQuery ? (
-                <>
-                  <motion.div
-                    onClick={clickOverlay}
-                    className={styled.overlay}
-                  />
-                  <motion.div
-                    layoutId={router.query.characterId}
-                    className={styled.charinfobox}
-                    style={{
-                      top: scrollY.get() + 100,
-                    }}
-                  >
-                    <div
-                      className={styled.charimg}
-                      style={{
-                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8kz8OZm6SbGYsOm3gNx6sqi2dPA2FUHZWnxmVnVXqX-3IIJXJAdsFYvq3btLr4hs3gHs&usqp=CAU 
-                        )`,
-                      }}
-                    ></div>
-                    {clickedCharacter && (
-                      <>
-                        <motion.div
-                          whileHover={{ scale: 1.3 }}
-                          className={styled.exit}
-                          onClick={clickOverlay}
-                        >
-                          <ImCancelCircle />
-                        </motion.div>
-
-                        <div className={styled.charinfo}>
-                          <p>
-                            Name: {clickedCharacter.result.properties.name}{" "}
-                          </p>
-                          <p>
-                            Height: {clickedCharacter.result.properties.height}{" "}
-                          </p>
-                          <p>
-                            Birth Year:{" "}
-                            {clickedCharacter.result.properties.birth_year}
-                          </p>
-
-                          <p>
-                            Eye color:{" "}
-                            {clickedCharacter.result.properties.eye_color}
-                          </p>
-                          <p>
-                            Gender: {clickedCharacter.result.properties.gender}
-                          </p>
-                          <p>
-                            Hair color:{" "}
-                            {clickedCharacter.result.properties.hair_color}
-                          </p>
-
-                          <p>Mass: {clickedCharacter.result.properties.mass}</p>
-
-                          <p>
-                            Skin color:{" "}
-                            {clickedCharacter.result.properties.skin_color}
-                          </p>
-                        </div>
-                      </>
-                    )}
-                  </motion.div>
-                </>
-              ) : null}
-            </>
-          </AnimatePresence>
+      <div
+        className={styled.banner}
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),url("https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg")',
+        }}
+      >
+        <div className={styled.movieinfo}>
+          <p className={styled.title}>{title}</p>
+          <p>Produced by {producer}</p>
+          <p>Directed by {director}</p>
+          <p>Released date: {release_date}</p>
+          <p>{opening_crawl}</p>
         </div>
+        <div className={styled.title}>
+          <h1>Characters from {title}</h1>
+        </div>
+
+        <AnimatePresence>
+          <>
+            {characterQuery ? (
+              <>
+                <motion.div onClick={clickOverlay} className={styled.overlay} />
+                <motion.div
+                  layoutId={router.query.characterId}
+                  className={styled.charinfobox}
+                  style={{
+                    top: scrollY.get() + 100,
+                  }}
+                >
+                  <div
+                    className={styled.charimg}
+                    style={{
+                      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8kz8OZm6SbGYsOm3gNx6sqi2dPA2FUHZWnxmVnVXqX-3IIJXJAdsFYvq3btLr4hs3gHs&usqp=CAU 
+                        )`,
+                    }}
+                  />
+                  {clickedCharacter && (
+                    <>
+                      <motion.div
+                        whileHover={{ scale: 1.3 }}
+                        className={styled.exit}
+                        onClick={clickOverlay}
+                      >
+                        <ImCancelCircle />
+                      </motion.div>
+
+                      <div className={styled.charinfo}>
+                        <p>Name: {clickedCharacter.result.properties.name} </p>
+                        <p>
+                          Height: {clickedCharacter.result.properties.height}{" "}
+                        </p>
+                        <p>
+                          Birth Year:{" "}
+                          {clickedCharacter.result.properties.birth_year}
+                        </p>
+
+                        <p>
+                          Eye color:{" "}
+                          {clickedCharacter.result.properties.eye_color}
+                        </p>
+                        <p>
+                          Gender: {clickedCharacter.result.properties.gender}
+                        </p>
+                        <p>
+                          Hair color:{" "}
+                          {clickedCharacter.result.properties.hair_color}
+                        </p>
+
+                        <p>Mass: {clickedCharacter.result.properties.mass}</p>
+
+                        <p>
+                          Skin color:{" "}
+                          {clickedCharacter.result.properties.skin_color}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </motion.div>
+              </>
+            ) : null}
+          </>
+        </AnimatePresence>
+
         <div className={styled.slider}>
           <div className={styled.gridcontainer}>
             <div className={styled.back} onClick={decreaseIndex}>
@@ -300,14 +309,22 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
               </motion.p>
             </div>
           </div>
-          <div></div>
         </div>
         <div className={styled.backhome}>
-          <p onClick={pushBack} style={{ color: "white", cursor: "pointer" }}>
-            Back to movies page
+          <p
+            onClick={pushBack}
+            style={{
+              color: "white",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <BiArrowBack /> Back to movies page
           </p>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
@@ -329,7 +346,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  console.log(params);
   const resFilmsById = await fetch(
     `https://www.swapi.tech/api/films/${params.id}`
   );

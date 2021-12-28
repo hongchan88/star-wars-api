@@ -1,16 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Movie from "../components/movie.js";
-import styles from "../styles/Home.module.css";
-
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import styles from "../styles/Home.module.scss";
+
 import Header from "../components/header.jsx";
 import Loading from "../components/loading.js";
+import Footer from "../components/footer";
 
-export default function Home({ data, loading }) {
-  console.log(loading);
+export default function Home({ loading }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -21,32 +17,21 @@ export default function Home({ data, loading }) {
 
       {!loading && <Loading />}
 
-      <div className={styles.banner}></div>
-
-      <main className={styles.main}>
+      <div className={styles.banner}>
         <Header />
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <main className={styles.main}>
+          <div className={styles.textcontainer}>
+            <h1 className={styles.title}>Star Wars Movies and more.</h1>
 
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+            <div className={styles.description}>
+              <Link href="/movies">
+                <p className={styles.moreinfo}>More info</p>
+              </Link>
+            </div>
+          </div>
+        </main>
+      </div>
+      <Footer />
     </div>
   );
 }
