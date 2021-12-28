@@ -365,9 +365,9 @@ export async function getStaticProps({ params }) {
   };
 
   // Promise.all for using map function
-  // get only 8 data as api server fails to get all data
+  // get only 8 character api data as api server fails to get all data
   const characterData = await Promise.all(
-    characters.map(async (characterUrl) => {
+    characters.slice(0, 7).map(async (characterUrl) => {
       const data = await getCharData(characterUrl);
 
       return data;
