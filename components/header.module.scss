@@ -3,12 +3,12 @@
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   top: 0;
   font-size: 14px;
-  padding: 20px 60px;
+  padding: 10px 100px;
   color: white;
-  background-color: black;
+  font-weight: 400;
   z-index: 1;
 }
 
@@ -18,14 +18,9 @@
 }
 
 .logo {
-  margin-right: 50px;
-  width: 95px;
+  margin-right: 5px;
+  width: 5px;
   height: 25px;
-  fill: red;
-  path {
-    stroke-width: 6px;
-    stroke: white;
-  }
 }
 
 .items {
@@ -63,6 +58,7 @@
   color: white;
   display: flex;
   align-items: center;
+
   position: relative;
   svg {
     height: 25px;

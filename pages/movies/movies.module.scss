@@ -1,17 +1,53 @@
+.banner {
+  height: 100vh;
+  width: 100vw;
+  min-height: 800px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 100px;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg);
+  background-size: cover;
+}
+
+//search bar
+.col {
+  display: flex;
+  align-items: center;
+}
+.search {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    height: 40px;
+    position: block;
+  }
+}
+
+//slider
+
 .slider {
-  position: relative;
   display: flex;
   justify-content: center;
-  top: -300px;
+  align-items: center;
+  margin-top: 50px;
+  width: 100%;
 }
 .gridcontainer {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
   grid-template-rows: repeat(3, 1fr);
 
   gap: 20px;
   width: 100%;
-  position: absolute;
+  position: relative;
 }
 .row {
   display: grid;
@@ -19,24 +55,15 @@
   grid-template-columns: repeat(3, 1fr);
   grid-column: 2 / 5;
   width: 100%;
-
   position: absolute;
 }
 .box {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+
   height: 100%;
   width: 100%;
-  cursor: pointer;
+
   font-size: 12px;
-}
-
-.title {
-  margin-top: 100px;
-}
-
-.container {
-  height: 20vh;
-  background-color: black;
 }
 
 .footer {
@@ -48,23 +75,11 @@
   align-items: center;
 }
 
-.banner {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg);
-  background-size: cover;
-}
-
 .back {
   color: white;
   display: grid;
   grid-column: 1 / 2;
-  opacity: 0.4;
+  opacity: 0.8;
   grid-row: 2/3;
   height: 100%;
   &:hover {
@@ -74,7 +89,7 @@
 .next {
   color: white;
   display: grid;
-  opacity: 0.4;
+  opacity: 0.8;
   grid-column: 5 / 6;
   grid-row: 2/3;
 
@@ -88,4 +103,21 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.input {
+  transform-origin: right center;
+  position: block;
+
+  padding: 5px 10px;
+
+  z-index: 0;
+  color: white;
+  font-size: 24px;
+  background-color: transparent;
+  border: 1px solid white;
+}
+
+.input::placeholder {
+  color: white;
 }

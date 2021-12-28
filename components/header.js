@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "./header.module.scss";
 import Link from "next/link";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 
-const Header = (props) => {
+const Header = () => {
   const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
+  const { register, handleSubmit, watch } = useForm();
   const inputAnimation = useAnimation();
+  const { scrollY } = useViewportScroll();
+  const [scrolly, setScrolly] = useState();
   const toggleSearch = () => {
     if (searchOpen) {
       inputAnimation.start({
@@ -18,9 +22,30 @@ const Header = (props) => {
     }
     setSearchOpen((prev) => !prev);
   };
+  const onSubmit = (data) => {
+    router.push(
+      {
+        pathname: `/search`,
+        query: { keyword: data.headerSearch },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+  useEffect(() => {
+    scrollY.onChange(() => {
+      setScrolly(scrollY.get());
+    });
+  }, [scrollY]);
 
   return (
-    <nav className={styled.nav}>
+    <motion.nav
+      animate={{
+        backgroundColor:
+          scrolly > 20 ? "rgba(0 , 0, 0, 1)" : "rgba(0 , 0, 0, 0.2)",
+      }}
+      className={styled.nav}
+    >
       <div className={styled.col}>
         <svg className={styled.logo}></svg>
         <ul className={styled.items}>
@@ -33,7 +58,7 @@ const Header = (props) => {
             </li>
           </Link>
 
-          <Link href="/movies">
+          <Link href={{ pathname: "/movies" }}>
             <li className={styled.item}>
               Movies{" "}
               {router.pathname === "/movies" && (
@@ -41,18 +66,10 @@ const Header = (props) => {
               )}
             </li>
           </Link>
-          <Link href="/myfav">
-            <li className={styled.item}>
-              My Favourite
-              {router.pathname === "/myfav" ? (
-                <motion.span className={styled.circle} layoutId="circle" />
-              ) : null}
-            </li>
-          </Link>
         </ul>
       </div>
       <div className={styled.col}>
-        <form className={styled.search}>
+        <form className={styled.search} onSubmit={handleSubmit(onSubmit)}>
           <motion.svg
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -185 : 0 }}
@@ -68,14 +85,16 @@ const Header = (props) => {
             ></path>
           </motion.svg>
           <motion.input
+            {...register("headerSearch")}
+            className={styled.input}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "linear" }}
-            placeholder="Search for movie or tv show..."
+            placeholder="Search for movie"
           />
         </form>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

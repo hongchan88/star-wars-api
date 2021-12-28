@@ -1,20 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "./character.module.scss";
 
-const Character = ({ character, charactersApi }) => {
-  const {
-    birth_year,
+const Character = ({ character }) => {
+  const { name } = character.result.properties;
 
-    eye_color,
-    gender,
-    hair_color,
-    height,
-    homeworld,
-    mass,
-    name,
-    skin_color
-  } = character.result.properties;
-  console.log(character.result.properties.name);
   return (
     <div className={styled.container}>
       <img
@@ -32,12 +21,3 @@ const Character = ({ character, charactersApi }) => {
 };
 
 export default Character;
-
-export const getServerSideProps = async (context) => {
-  console.log("context");
-  return {
-    props: {
-      data: "heelo"
-    }
-  };
-};
