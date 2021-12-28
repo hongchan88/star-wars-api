@@ -6,12 +6,20 @@ const Footer = (props) => {
     <footer className={styled.footer}>
       <p>Website developed by Hong Seo</p>
       <div className={styled.github}>
-        <a href="https://github.com/hongchan88/star-wars-api" target={"_blank"}>
+        <a
+          href="https://github.com/hongchan88/star-wars-api"
+          target={"_blank"}
+          rel="noopener noreferrer"
+        >
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
         </a>
       </div>
       <div className={styled.linkedin}>
-        <a href="https://www.linkedin.com/in/hong-seo/" target={"_blank"}>
+        <a
+          href="https://www.linkedin.com/in/hong-seo/"
+          target={"_blank"}
+          rel="noopener noreferrer"
+        >
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" />
         </a>
       </div>
