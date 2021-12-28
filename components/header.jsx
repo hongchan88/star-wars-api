@@ -33,16 +33,17 @@ const Header = () => {
     );
   };
   useEffect(() => {
-    scrollY.onChange(() => {});
+    scrollY.onChange(() => {
+      setScrolly(scrollY.get());
+    });
   }, [scrollY]);
 
   return (
     <motion.nav
       animate={{
         backgroundColor:
-          scrollY.get() > 20 ? "rgba(0 , 0, 0, 1)" : "rgba(0 , 0, 0, 0.2)",
+          scrolly > 20 ? "rgba(0 , 0, 0, 1)" : "rgba(0 , 0, 0, 0.2)",
       }}
-      transition={{ type: "linear" }}
       className={styled.nav}
     >
       <div className={styled.col}>
@@ -71,7 +72,7 @@ const Header = () => {
         <form className={styled.search} onSubmit={handleSubmit(onSubmit)}>
           <motion.svg
             onClick={toggleSearch}
-            animate={{ x: searchOpen ? -215 : 0 }}
+            animate={{ x: searchOpen ? -185 : 0 }}
             transition={{ type: "linear" }}
             fill="currentColor"
             viewBox="0 0 20 20"

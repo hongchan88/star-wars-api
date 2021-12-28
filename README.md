@@ -5,7 +5,7 @@
 - [x] Home page
 
 - [x] Header navigation
-- [] fixed header + scroll to change background color
+- [x] fixed header + scroll to change background color
 - [x] search bar on header
 - [x] added motion to show active navigation with red dot
 
@@ -21,6 +21,7 @@
 - [x] clicking other than the detail tooltip box will return to list of the characters page
 - [x] hovering, slider on character page of the movie
 
-- [] Loading ...
-- [] header transparent on fixed and when scroll down change to black background
+- [x] Loading ... (random array number -> get random icons)
+- [] favourite click when hover -> some times card will stay hover when changed to top list
+
 - [x] search function

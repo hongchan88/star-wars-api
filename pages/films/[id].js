@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/Im";
 import { useRouter } from "next/router";
+import Loading from "../../components/loading";
 
 const boxVariants = {
   normal: {
@@ -35,7 +36,7 @@ const infoVariants = {
     },
   },
 };
-const FilmsbyId = ({ dataFilmsById, characterData }) => {
+const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [direction, setDirection] = useState(true);
@@ -142,11 +143,13 @@ const FilmsbyId = ({ dataFilmsById, characterData }) => {
   return (
     <>
       <Header />
+      {!loading && <Loading />}
       <div style={divStyle}>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
           <div className={styled.title}>
             <h1>Characters from {title}</h1>
           </div>
+
           <AnimatePresence>
             <>
               {characterQuery ? (
