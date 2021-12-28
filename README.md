@@ -25,3 +25,5 @@
 - [x] favourite click when hover -> some times card will stay hover when changed to top list
 
 - [x] search function
+
+- [x] deploy on vercel
