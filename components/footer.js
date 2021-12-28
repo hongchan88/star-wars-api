@@ -4,7 +4,7 @@ import styled from "./footer.module.scss";
 const Footer = (props) => {
   return (
     <footer className={styled.footer}>
-      <span>Website coded by Hong Seo</span>
+      <span>Website developed by Hong Seo</span>
     </footer>
   );
 };

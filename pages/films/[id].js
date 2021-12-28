@@ -144,7 +144,6 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
 
   return (
     <>
-      <Header />
       {!loading && <Loading />}
       <div
         className={styled.banner}
@@ -153,6 +152,7 @@ const FilmsbyId = ({ dataFilmsById, characterData, loading }) => {
             'linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),url("https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg")',
         }}
       >
+        <Header />
         <div className={styled.movieinfo}>
           <p className={styled.title}>{title}</p>
           <p>Produced by {producer}</p>
