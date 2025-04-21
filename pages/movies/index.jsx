@@ -1,16 +1,16 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-import { useEffect, useState } from "react";
-import Movie from "../../components/movie.js";
+import { useEffect, useState } from 'react';
+import Movie from '../../components/movie.jsx';
 
-import styled from "./movies.module.scss";
+import styled from './movies.module.scss';
 
-import { useForm } from "react-hook-form";
-import Header from "../../components/header.js";
-import { AnimatePresence, motion } from "framer-motion";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import Loading from "../../components/loading.js";
-import Footer from "../../components/footer.js";
+import { useForm } from 'react-hook-form';
+import Header from '../../components/header.jsx';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import Loading from '../../components/loading.jsx';
+import Footer from '../../components/footer.jsx';
 
 const boxVariants = {
   normal: {
@@ -22,7 +22,7 @@ const boxVariants = {
     transition: {
       delay: 0.1,
       duration: 0.2,
-      type: "tween",
+      type: 'tween',
     },
   },
 };
@@ -62,7 +62,7 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
   }, [favourite]);
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
     });
   }, []);
@@ -103,13 +103,13 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
     setFilteredData(filteredData);
   };
   useEffect(() => {
-    if (watch("search") !== "") {
+    if (watch('search') !== '') {
       setIndex(0);
 
       const filteredData = movieData.filter((movie) => {
         return movie.properties.title
           .toLowerCase()
-          .includes(watch("search").toLowerCase());
+          .includes(watch('search').toLowerCase());
       });
       setFilteredData(filteredData);
     } else {
@@ -119,14 +119,14 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
 
       setLeaving(false);
     }
-  }, [watch("search")]);
+  }, [watch('search')]);
 
   return (
     <div>
       <Head>
         <title>Star Wars movie search</title>
-        <meta name="description" content="Star Wars movie search" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='Star Wars movie search' />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
       {!loading && <Loading />}
       <div className={styled.banner}>
@@ -134,21 +134,21 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
         <div className={styled.col}>
           <form className={styled.search} onSubmit={handleSubmit(onSubmit)}>
             <svg
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              xmlns='http://www.w3.org/2000/svg'
             >
               <path
-                fillRule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+                clipRule='evenodd'
               ></path>
             </svg>
             <motion.input
               className={styled.input}
-              placeholder="Search for movie .."
-              {...register("search", {
-                required: "Please enter search term",
+              placeholder='Search for movie ..'
+              {...register('search', {
+                required: 'Please enter search term',
               })}
             />
           </form>
@@ -189,7 +189,7 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
                   };
                 }}
                 transition={{
-                  type: "tween",
+                  type: 'tween',
                   duration: 1,
                 }}
                 key={index}
@@ -200,9 +200,9 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
                       .map((movie) => (
                         <motion.div
                           variants={boxVariants}
-                          initial="normal"
+                          initial='normal'
                           className={styled.box}
-                          transition={{ type: "tween" }}
+                          transition={{ type: 'tween' }}
                           key={movie.uid}
                         >
                           <Movie
@@ -218,9 +218,9 @@ export default function Movies({ data, loading, clickFavourite, favourite }) {
                       .map((movie) => (
                         <motion.div
                           variants={boxVariants}
-                          initial="normal"
+                          initial='normal'
                           className={styled.box}
-                          transition={{ type: "tween" }}
+                          transition={{ type: 'tween' }}
                           key={movie.uid}
                         >
                           <Movie

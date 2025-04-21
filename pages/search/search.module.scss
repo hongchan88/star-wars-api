@@ -7,10 +7,16 @@
   justify-content: center;
   align-items: center;
   padding: 100px;
+  position: relative;
 
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(https://res.cloudinary.com/dwbsxpk82/image/upload/v1640179209/portfolio/kki2so836ji1ptws2epr.jpg);
   background-size: cover;
+  .loading {
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
 }
 .slider {
   display: flex;
